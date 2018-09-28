@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+    function computerPlay() {
+        let number = Math.floor(Math.random() * 11);
+
+        if (number <= 3) {
+            return 'rock';
+        } else if (number <= 6 ) {
+            return 'paper';
+        } else { 
+            return 'scissors';
+        }
+    }
+
+    function playRound(playerPlay, computerPlay) {
+        let results = 'Rocky da Computer: ' + computerPlay + ' vs ' + 'User: ' + playerPlay;
+
+        if (computerPlay === 'rock') {
+            if (computerPlay === 'rock' && playerPlay === 'scissors') {
+                console.log('Computer beat you! ', results);
+            } else if (computerPlay === 'rock' && playerPlay === 'paper') {
+                console.log('You beat Rocky! ', results);
+            } else {
+                console.log ('This round was a draw! ', results);
+            }
+        }
+
+        if (computerPlay === 'paper') {
+            if (computerPlay=== 'paper' && playerPlay === 'rock') {
+                console.log('Computer beat you! ', results);
+            } else if (computerPlay === 'paper' && playerPlay === 'scissors') {
+                console.log('You beat Rocky! ', results);
+            } else {
+                console.log ('This round was a draw! ', results);
+            }
+        }
+
+        if (computerPlay === 'scissors') {
+            if (computerPlay === 'scissors' && playerPlay === 'paper') {
+                console.log('Computer beat you! ', results);
+            } else if (computerPlay === 'scissors' && playerPlay === 'rock') {
+                console.log('You beat Rocky! ', results);
+            } else {
+                console.log ('This round was a draw! ', results);
+            }
+        }
+    }
+
+    function game() {
+        for (i = 0; i < 5; i++) {
+            let playerSelection = prompt('Lets play rock, paper, scissors. Please make your selection to face our latest champ Rocky da Computer.');
+            playerSelection = playerSelection.toLowerCase();
+
+            if (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection!== 'scissors') {
+                alert('Invalid Player Selection! Please select from the following: rock, paper, scissors');
+                game();
+            }
+        
+            const computerSelection = computerPlay();
+            playRound(playerSelection, computerSelection);
+        }
+    }
+
+    game();
+
+
+
+
+</script>
+</html>
