@@ -5,15 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        .container {
+            margin: 20px auto;
+        }
+
+        button {
+            width: auto;
+            height: 100%;
+            border-radius: .5em;
+            border: none;
+            background-color: dodgerblue;
+            color: white;
+            font-size: 16px;
+            font-weight: 100;
+            margin: 0 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            text-align: center;
+        }
+        
+        hr {
+            border: 1px solid lightgray;
+            margin: 20px auto;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <button>Rock</button>
+        <button>Scissors</button>
+        <button>Paper</button>
+    </div>
+    <hr>
+    <div id="results">
+        <h3>Game Results</h3>
+        <p class="score_user"></p>
+        <p class="score_computer"></p>
+    </div>
 </body>
 
 <script>
+
+    const buttons = document.querySelectorAll('button');
+    const scoreboard = document.querySelector('#results');
+    const playerOne = document.querySelector('.score_user');
+    const computerUser = document.querySelector('.score_computer');
+    let playerScore = 0;
+    let computerScore = 0;
+
+    // Disable Buttons
+    function disableButtons() {
+        buttons.forEach((button) => {button.disabled = true;})
+    }
+
+    // Computer Plays Rock:Paper:Scissors
     function computerPlay() {
         let number = Math.floor(Math.random() * 11);
-
         if (number <= 3) {
             return 'rock';
         } else if (number <= 6 ) {
@@ -23,59 +73,52 @@
         }
     }
 
-    function playRound(playerPlay, computerPlay) {
-        let results = 'Rocky da Computer: ' + computerPlay + ' vs ' + 'User: ' + playerPlay;
-
+    // Check to see who wins the Round
+    function playRound(playerPlay, computerPlay) {            
         if (computerPlay === 'rock') {
             if (computerPlay === 'rock' && playerPlay === 'scissors') {
-                console.log('Computer beat you! ', results);
+                scoreBoard(1, 'computer scored');
             } else if (computerPlay === 'rock' && playerPlay === 'paper') {
-                console.log('You beat Rocky! ', results);
+                scoreBoard(1, 'player scored');
             } else {
-                console.log ('This round was a draw! ', results);
+                console.log ('This round was a draw! ');
             }
         }
-
         if (computerPlay === 'paper') {
             if (computerPlay=== 'paper' && playerPlay === 'rock') {
-                console.log('Computer beat you! ', results);
+                scoreBoard(1, 'computer scored');
             } else if (computerPlay === 'paper' && playerPlay === 'scissors') {
-                console.log('You beat Rocky! ', results);
+                scoreBoard(1, 'player scored');
             } else {
-                console.log ('This round was a draw! ', results);
+                console.log ('This round was a draw! ');
             }
         }
-
         if (computerPlay === 'scissors') {
             if (computerPlay === 'scissors' && playerPlay === 'paper') {
-                console.log('Computer beat you! ', results);
+                scoreBoard(1, 'computer scored');
             } else if (computerPlay === 'scissors' && playerPlay === 'rock') {
-                console.log('You beat Rocky! ', results);
+                 scoreBoard(1, 'player scored');
             } else {
-                console.log ('This round was a draw! ', results);
+                console.log ('This round was a draw! ');
             }
         }
     }
 
-    function game() {
-        for (i = 0; i < 5; i++) {
-            let playerSelection = prompt('Lets play rock, paper, scissors. Please make your selection to face our latest champ Rocky da Computer.');
-            playerSelection = playerSelection.toLowerCase();
-
-            if (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection!== 'scissors') {
-                alert('Invalid Player Selection! Please select from the following: rock, paper, scissors');
-                game();
-            }
+    // Current Score
+    function scoreBoard (points, playerStatus) {
+        if (playerStatus === 'computer scored' && computerScore < 5) { computerUser.innerHTML = `Computer Score:  ${computerScore += points}`; } 
+    
+        if (playerStatus === `player scored` && playerScore < 5) { playerOne.innerHTML = `Player Score: ${playerScore += points}`; }
         
-            const computerSelection = computerPlay();
-            playRound(playerSelection, computerSelection);
-        }
+        if (computerScore === 5) { computerUser.innerHTML = 'Computer Won!'; disableButtons()}
+        
+        if (playerScore === 5) { playerOne.innerHTML = 'Player Won!'; disableButtons()}
     }
 
-    game();
-
-
-
-
+     buttons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+            playRound(e.originalTarget.innerHTML.toLowerCase(), computerPlay());
+        })
+    });
 </script>
 </html>
